@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 
 import Titles from './components/titles';
-import Titles from './components/form';
+import Form from './components/form';
+import Weather from './components/weather';
 
 class App extends Component {
   render(){
