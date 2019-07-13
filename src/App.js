@@ -12,6 +12,8 @@ class App extends Component {
     country: undefined,
     humidity: undefined,
     description: undefined,
+    sunrise: undefined,
+    sunset: undefined,
     error: undefined
   }
 
@@ -21,7 +23,7 @@ class App extends Component {
     const city = event.target.elements.city.value;
     const country = event.target.elements.country.value;
 
-    const api_call = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${API_KEY}`);
+    const api_call = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&units=imperial&appid=${API_KEY}`);
 
     const data = await api_call.json();
 
@@ -32,7 +34,9 @@ class App extends Component {
         city: data.name,
         country: data.sys.country,
         humidity: data.main.humidity,
-        description: data.weather[0].description
+        description: data.weather[0].description,
+        sunrise: data.sys.sunrise,
+        sunset: data.sys.sunset
       });
 
       console.log(data);
@@ -43,9 +47,18 @@ class App extends Component {
         country: undefined,
         humidity: undefined,
         description: undefined,
+        sunrise: undefined,
+        sunset: undefined,
         error: 'Please enter valid values.'
       });
     }
+  }
+
+  formatDateTime (unixTimestamp) {
+    const date = new Date(unixTimestamp * 1000)
+    const hours = date.getHours()
+    const minutes = '0' + date.getMinutes()
+    return hours + ':' + minutes.substr(-2)
   }
 
   render(){
@@ -60,6 +73,9 @@ class App extends Component {
             country={this.state.country}
             humidity={this.state.humidity}
             description={this.state.description}
+            sunrise={this.state.sunrise}
+            sunset={this.state.sunset}
+            formatDateTime={this.formatDateTime.bind(this)}
             error={this.state.error}
             />
         </div>
