@@ -14,6 +14,7 @@ class App extends Component {
     description: undefined,
     sunrise: undefined,
     sunset: undefined,
+    timezone: undefined,
     error: undefined
   }
 
@@ -36,7 +37,8 @@ class App extends Component {
         humidity: data.main.humidity,
         description: data.weather[0].description,
         sunrise: data.sys.sunrise,
-        sunset: data.sys.sunset
+        sunset: data.sys.sunset,
+        timezone: data.timezone
       });
 
       console.log(data);
@@ -49,16 +51,19 @@ class App extends Component {
         description: undefined,
         sunrise: undefined,
         sunset: undefined,
+        timezone: undefined,
         error: 'Please enter valid values.'
       });
     }
   }
 
-  formatDateTime (unixTimestamp) {
-    const date = new Date(unixTimestamp * 1000)
+  formatDateTime (unixTimestamp, timezone) {
+    const date = new Date(unixTimestamp * 1000) 
+    const offset = new Date((unixTimestamp + timezone) * 1000).getHours()
     const hours = date.getHours()
     const minutes = '0' + date.getMinutes()
-    return hours + ':' + minutes.substr(-2)
+    const fullTime = date.toUTCString()
+    return /* hours + ':' + minutes.substr(-2) */ fullTime + ' + ' + offset
   }
 
   render(){
@@ -75,7 +80,8 @@ class App extends Component {
             description={this.state.description}
             sunrise={this.state.sunrise}
             sunset={this.state.sunset}
-            formatDateTime={this.formatDateTime.bind(this)}
+            timezone={this.state.timezone}
+            formatDateTime={this.formatDateTime}
             error={this.state.error}
             />
         </div>

@@ -7,7 +7,8 @@ class Weather extends Component {
         { this.props.temperature && <p>Temperature: {this.props.temperature} </p> }
         { this.props.humidity && <p>Humidity: {this.props.humidity} </p> }
         { this.props.description && <p>Conditions: {this.props.description}</p> }
-        { this.props.sunrise && this.props.sunset && <p>Sunrise: { this.props.formatDateTime(this.props.sunrise) } Sunset: { this.props.formatDateTime(this.props.sunset) }</p> }
+        { this.props.sunrise && <p>Sunrise: {this.props.formatDateTime(this.props.sunrise, this.props.timezone)} </p> }
+        { this.props.sunset && <p>Sunrise: {this.props.formatDateTime(this.props.sunset, this.props.timezone)} </p> }
         { this.props.error && <p>ERROR: {this.props.error}</p> }
       </div>
     )
