@@ -1,4 +1,4 @@
-import React, { Component } from 'react's
+import React, { Component } from 'react'
 
 class Titles extends Component {
   render () {
